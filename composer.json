@@ -1,5 +1,5 @@
 {
-    "name": "aw/aw",
+    "name": "aw/awlib",
     "description": "A short description of what your package does",
     "require": {
         "php": "^5.0"
