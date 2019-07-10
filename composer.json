@@ -1,2 +1,6 @@
-{
-}
+"name": "aw/aw",
+"type": "library",
+"description": "Create overview sample can intergrate other project",
+"keywords": ["package","package"],
+"homepage": "https://github.com/InfinitePW/Foostart",
+"license": "MIT"
