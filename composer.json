@@ -1,6 +1,5 @@
 {
     "name": "artistadaweb/aw",
     "description": "personal package",
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "minimum-stability": "dev"
 }
