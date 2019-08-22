@@ -1,10 +1,12 @@
 //MASCARA P/ CPF CNPJ
+/*
 $(".cpfcnpj").keydown(function(){
     maskCnpj($(this));
 });
 $(".cpfcnpj").ready(function(){
     maskCnpj($(this));
 });
+
 function maskCnpj(el){
     try {
     	$(el).unmask();
@@ -25,7 +27,7 @@ function maskCnpj(el){
     var currentValue = $(el).val();
     $(el).val('');
     $(el).val(currentValue);
-}
+}/*
 function maskCnpjStr(el){
 
     var $in = $("<input>", {id: "foo", "name": "inptest","type":"hidden","value":el});
@@ -54,7 +56,7 @@ function maskCnpjStr(el){
     $($in).val(currentValue);
 
     return $($in).val();
-}
+}*/
 //MASCARA P/ CPF CNPJ
 //MASCARA P/ CEP
 $("#cep").keyup(function(){
@@ -62,19 +64,20 @@ $("#cep").keyup(function(){
     maskCep();
 
 });
+/*
 $("#cep").ready(function(){
 
     maskCep();
 
-});
+});*/
 
 function maskCep(){
     var cep = $("#cep").val();
     if(cep.length > 0){
     $("#cep").mask("99999-999");
 
-        $("#cep").parent(2).addClass("has-error");
-        $("#cep").parent(2).removeClass("has-success");
+        $("#cep").next().addClass("has-error");
+        $("#cep").next().removeClass("has-success");
         $("#cep").next().html('O formato do CEP é inválido (ex: 00000-000)');
 
         var tamanho = $("#cep").val().length;
@@ -82,15 +85,15 @@ function maskCep(){
 
             
             if(tamanho == 9){
-                $("#cep").parent(2).addClass("has-success");
-                $("#cep").parent(2).removeClass("has-error");
+                $("#cep").next().addClass("has-success");
+                $("#cep").next().removeClass("has-error");
                 $("#cep").next().html('');
             }
         
 
     }else{
-        $("#cep").parent(2).removeClass("has-success");
-        $("#cep").parent(2).removeClass("has-error");
+        $("#cep").next().removeClass("has-success");
+        $("#cep").next().removeClass("has-error");
         $("#cep").next().html('');
     }
 }
@@ -120,6 +123,12 @@ function converteDataBrToUs(data){
     data = data.split('/');
 
     return (data[2]+'-'+data[1]+'-'+data[0]);
+}
+function converteDataTimeUsToBr(data){
+    data0 = data.split(' ');
+    data = data0[0].split('-');
+
+    return (data[2]+'/'+data[1]+'/'+data[0]);
 }
 
 $('#data').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });

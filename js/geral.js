@@ -1,66 +1,31 @@
-function callEmpresaSelect(){
-    
-    showLoader();  
-
-                    //////console.log('sucesso'+response);
-                    
-                    
-
-                            $.ajax({  
-                                type: 'POST',  
-                                url: 'controller/AjaxHome.php', 
-                                data: { 
-                                    'func': "loadDefault"
-                                },
-                                success: function(response) {
-                                    //////console.log('sucesso'+response);
-                                    
-                                    var res = response.split('[:::]');
-                
-                                    if(res[0]==1){
-                                        
-                
-                                        $("select[name=empr2]").empty();
-                                        $("select[name=empr2]").append("<option></option>");
-                                        $("select[name=empr2]").append(res[1]);
-                                    
-                                        //;
-                                    }else{
-                                    showAlert("Empresas",res[1],2);
-                                    }
-                                    
-                                }
-                            });
-                            
-                            $('#escolheEmpresa').modal({backdrop: 'static', keyboard: false});
-       
-
-    hideLoader();
+function showLoadComponent(mod){
+    $(mod).append("<img src='images/geral/load_infinity.gif' class='load_infinity' alt='Loader' title='Loader' style='clear:both;display:block;width:50px;margin:auto;' />");
 }
-function salvaSession(){
-
-    $.ajax({  
-        type: 'POST',  
-        url: 'controller/AjaxHome.php', 
-        data: { 
-            'func': "changeSession",
-            'sName': "empresa",
-            'sVal': $('select[name=empr2]').find('option:checked').val()
-        },
-        success: function(response) {
-                    //////console.log('sucesso'+response);
-                    
-                    var res = response.split('[:::]');
-                    location.reload();
-
+function hideLoadComponent(mod){
+    setTimeout(function(){
+        $(mod).find(".load_infinity").remove();
+    },500);
+    
+}
+//
+function checkFormErrors(mod){
+    erros=[];
+    $(mod).find('.help-block').each(function(){
+        if($(this).hasClass("has-error")){
+            erros.push($(this).attr('data-ref'));
         }
     });
+    
+    if(erros.length>0){
         
-
+        showAlert("Falha ao enviar", "Alguns campos do formulário estão preenchidos incorretamente ou inválidos. Corrija para reenviar. ["+erros.join(',')+"]", 1,'<button type="button" class="btn btn-danger radius_md" data-dismiss="modal">Fechar</button>');
+        return false;
+    
+    }else{
+        return true;
+    }
 }
-$(':checkbox').checkboxpicker();
-//
-
+/*
 $(function(){
     $("#money").maskMoney({symbol:'R$ ', 
    showSymbol:true, thousands:'.', decimal:',', symbolStay: true});
@@ -68,64 +33,78 @@ $(function(){
 $(function(){
     $(".money").maskMoney({symbol:'R$ ', 
    showSymbol:true, thousands:'.', decimal:',', symbolStay: true});
-    });
+    });*/
+    
+    function init() {
+        console.log("init");
+        var imgDefer = document.getElementsByTagName('img');
+        for (var i=0; i<imgDefer.length; i++) {
+        if(imgDefer[i].getAttribute('data-src')) {
+        imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
+        } } }
+        function getWebp() { // Nome da fun��o recebendo a vari�vel item
+            console.log("towebp");
+            var item = $('html').hasClass('webp') ? 'webp' : 'img'; // Atribui o valor a vari�vel item
+            $('img').each( function(){ // Busca todas as imagens do site
+                $( this ).attr('data-src', $( this ).data( item ) ); // Trocar� o Source da imagem
+            });
+            init();
+        }
 
-    $(document).ready(function() {
-        $('.data1').datetimepicker({
-          format: 'DD/MM/YYYY',
-          ignoreReadonly: true
-        });
-        $('.data2').datetimepicker({
-          format: 'DD/MM/YYYY',
-          ignoreReadonly: true
-        });
-        $('.dtinicio').datetimepicker({
-          format: 'DD/MM/YYYY',
-          ignoreReadonly: true
-        });
-        $('.data').datetimepicker({
-          format: 'DD/MM/YYYY',
-          ignoreReadonly: true
-        });
-      });
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 
     function showLoader(){
-        $('#loaderspin').css("display","block");
+        $('#animload').fadeIn(200);
     }
     function hideLoader(){
-        $('#loaderspin').css("display","none");
+        $('#animload').fadeOut(200);
     }
-    function showAlert(title, body, type,func='',val=''){
+    function showAlert(title, body, type,btns){
      
-        $('.alsl[id=modalTitle]').text('');
-        $('.alsl[id=modalBody]').empty('');
+        $('#customModal').find(".modal-title").empty();
+        $('#customModal').find(".modal-body").empty();
+        $('#customModal').find(".modal-footer").empty();
         /**
          * 1-Success;
          * 2-Error;
          * 3-Warns
-         */
+         *
         var src='';
         switch(type){
             case 1:src='images/icons/success.png';break;
             case 2:src='images/icons/error.png';break;
             case 3:src='images/icons/warning.png';break;
             default:src='images/icons/error.png';break;
-        }
-        $('.alsl[id=modalTitle]').text(title);
-        $('.alsl[id=modalBody]').append('<b>'+body+'</b>');
-        $('.alsl[id=modalType]').children('img').attr('src',src);
+        }*/
+        $('#customModal').find(".modal-title").append(title);
+        $('#customModal').find(".modal-body").append(body);
 
 
-        $('#modalAlert').modal({backdrop: 'static', keyboard: false}); 
-        $('#modalAlert').find('button[data-name=alsl]').click(function(){
-            switch(func){
-                case 'redirect':redir(val);break;
-                default:src='';break;
-            }
-        }); 
+        $('#customModal').modal({backdrop: 'static', keyboard: false}); 
+        $('#customModal').find('.modal-footer').append(btns); 
+    }
+    function showAlertContact(){
+     
+        $('#customModal').find(".modal-title").empty();
+        //$('#customModal').find(".modal-body").empty();
+        $('#customModal').find(".modal-footer").empty();
+        /**
+         * 1-Success;
+         * 2-Error;
+         * 3-Warns
+         *
+        var src='';
+        switch(type){
+            case 1:src='images/icons/success.png';break;
+            case 2:src='images/icons/error.png';break;
+            case 3:src='images/icons/warning.png';break;
+            default:src='images/icons/error.png';break;
+        }*/
+
+        $('#modalContact').modal({backdrop: 'static', keyboard: false}); 
+       // $('#modalContact').find('.modal-footer').append(btns); 
     }
     function showAlertperm(title, body, type,func='',val=''){
      
@@ -179,4 +158,33 @@ if (mm < 10) {
 
 today = yyyy+'-'+mm+'-'+dd;
 return today;
+}
+function getDaysAgo(datetime){
+    var dt = new Date();
+    var date1 = new Date(datetime);
+    var date2 = new Date(dt);
+    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+    return diffDays;
+}
+
+function tituloUrl(title){
+
+    return title.replace(" ","-").toLowerCase();
+
+}
+function RemoveAccents(strAccents) {
+    var strAccents = strAccents.split('');
+    var strAccentsOut = new Array();
+    var strAccentsLen = strAccents.length;
+    var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
+    for (var y = 0; y < strAccentsLen; y++) {
+        if (accents.indexOf(strAccents[y]) != -1) {
+            strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
+        } else
+            strAccentsOut[y] = strAccents[y];
+    }
+    strAccentsOut = strAccentsOut.join('');
+    return strAccentsOut;
 }

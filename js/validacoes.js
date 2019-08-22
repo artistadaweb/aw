@@ -4,33 +4,33 @@ $(".cpfcnpj").keyup(function(){
     //00.063.960/0001-09
     if(tamanho == 18){
         if(isCNPJValid($(this).val())){
-            $(this).parent(2).addClass("has-success");
-            $(this).parent(2).removeClass("has-error");
+            $(this).next().addClass("has-success");
+            $(this).next().removeClass("has-error");
             $(this).next().html('');
         }else{
-            $(this).parent(2).addClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().addClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('O CNPJ está incorreto.');
         }
 
     }else if(tamanho == 14){
         if(isCPFValid($(this).val().replace(/[^\w\s]/gi, ''))){
-            $(this).parent(2).addClass("has-success");
-            $(this).parent(2).removeClass("has-error");
+            $(this).next().addClass("has-success");
+            $(this).next().removeClass("has-error");
             $(this).next().html('');
         }else{
-            $(this).parent(2).addClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().addClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('O CPF está incorreto.');
         }
 
     }else if(tamanho == 0){
-        $(this).parent(2).removeClass("has-success");
-        $(this).parent(2).removeClass("has-error");
+        $(this).next().removeClass("has-success");
+        $(this).next().removeClass("has-error");
         $(this).next().html('');
     }else{
-        $(this).parent(2).addClass("has-error");
-        $(this).parent(2).removeClass("has-success");
+        $(this).next().addClass("has-error");
+        $(this).next().removeClass("has-success");
         $(this).next().html('O CNPJ está no formato incorreto! (ex: 00.000.000/0000-00)');
     }
 });
@@ -110,34 +110,34 @@ function validaCnpj(el){
     if(tamanho == 18){
         ivalidCnpj=isCNPJValid($(el).val());
         if(ivalidCnpj){
-            $(el).parent(2).addClass("has-success");
-            $(el).parent(2).removeClass("has-error");
+            $(el).next().addClass("has-success");
+            $(el).next().removeClass("has-error");
             $(el).next().html('');
         }else{
-            $(el).parent(2).addClass("has-error");
-            $(el).parent(2).removeClass("has-success");
+            $(el).next().addClass("has-error");
+            $(el).next().removeClass("has-success");
             $(el).next().html('O CNPJ está incorreto.');
            
         }
     }else if(tamanho == 14){
         //alert($(el).val().replace(/[^\w\s]/gi, ''));
         if(isCPFValid($(el).val().replace(/[^\w\s]/gi, ''))){
-            $(el).parent(2).addClass("has-success");
-            $(el).parent(2).removeClass("has-error");
+            $(el).next().addClass("has-success");
+            $(el).next().removeClass("has-error");
             $(el).next().html('');
         }else{
-            $(el).parent(2).addClass("has-error");
-            $(el).parent(2).removeClass("has-success");
+            $(el).next().addClass("has-error");
+            $(el).next().removeClass("has-success");
             $(el).next().html('O CPF está incorreto.');
         }
 
     }else if(tamanho == 0){
-        $(el).parent(2).removeClass("has-success");
-        $(el).parent(2).removeClass("has-error");
+        $(el).next().removeClass("has-success");
+        $(el).next().removeClass("has-error");
         $(el).next().html('');
     }else{
-        $(el).parent(2).addClass("has-error");
-        $(el).parent(2).removeClass("has-success");
+        $(el).next().addClass("has-error");
+        $(el).next().removeClass("has-success");
         $(el).next().html('O CNPJ está no formato incorreto! (ex: 00.000.000/0000-00)');
     }
 }
@@ -147,21 +147,21 @@ $(".cpfcnpj").ready(function(){
     
     if(tamanho == 18){
         if(isCNPJValid($(this).val())){
-            $(this).parent(2).addClass("has-success");
-            $(this).parent(2).removeClass("has-error");
+            $(this).next().addClass("has-success");
+            $(this).next().removeClass("has-error");
             $(this).next().html('');
         }else{
-            $(this).parent(2).addClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().addClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('O CNPJ está incorreto.');
         }
     }else if(tamanho == 0){
-        $(this).parent(2).removeClass("has-success");
-        $(this).parent(2).removeClass("has-error");
+        $(this).next().removeClass("has-success");
+        $(this).next().removeClass("has-error");
         $(this).next().html('');
     }else{
-        $(this).parent(2).addClass("has-error");
-        $(this).parent(2).removeClass("has-success");
+        $(this).next().addClass("has-error");
+        $(this).next().removeClass("has-success");
         $(this).next().html('O CNPJ está no formato incorreto! (ex: 00.000.000/0000-00)');
     }
 });
@@ -170,17 +170,17 @@ function valNomes(el){
     //var reg = /^([a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\-\.\,]+\s?)*\s*$/;
     if($(el).val().length < 1){
         //if(reg.test($(el).val())){
-        //    $(el).parent(2).removeClass("has-error");
-        //    $(el).parent(2).addClass("has-success");
+        //    $(el).next().removeClass("has-error");
+        //    $(el).next().addClass("has-success");
         //    $(el).next().html('');
         //}else{
-            $(el).parent(2).removeClass("has-success");
-            $(el).parent(2).addClass("has-error");
+            $(el).next().removeClass("has-success");
+            $(el).next().addClass("has-error");
             $(el).next().html('Verifique se digitou corretamente');
         //}
     }else{
-        $(el).parent(2).removeClass("has-error");
-        $(el).parent(2).addClass("has-success");
+        $(el).next().removeClass("has-error");
+        $(el).next().addClass("has-success");
         $(el).next().html("");
     }
 
@@ -192,24 +192,24 @@ function isPhone(phone,aa) {
 
     if($(phone).val().length >0){
         var regex = /^(\([0-9]{2}\) )([0-9]{4,5}-[0-9]{4})$/;
-        $(phone).parent(2).removeClass("has-success");
-        $(phone).parent(2).removeClass("has-error");
+        $(phone).next().removeClass("has-success");
+        $(phone).next().removeClass("has-error");
         if(regex.test(phonestr)){
-            $(phone).parent(2).removeClass("has-error");
-            $(phone).parent(2).addClass("has-success");
+            $(phone).next().removeClass("has-error");
+            $(phone).next().addClass("has-success");
             $(phone).next().html('');
         }else if($(phone).val().length <13){
-            $(phone).parent(2).addClass("has-error");
-            $(phone).parent(2).removeClass("has-success");
+            $(phone).next().addClass("has-error");
+            $(phone).next().removeClass("has-success");
             $(phone).next().html('Verifique se digitou corretamente');
         }else{
-            $(phone).parent(2).addClass("has-error");
-            $(phone).parent(2).removeClass("has-success");
+            $(phone).next().addClass("has-error");
+            $(phone).next().removeClass("has-success");
             $(phone).next().html('Verifique se digitou corretamente');
         }
     }else{
-        $(phone).parent(2).removeClass("has-success");
-        $(phone).parent(2).removeClass("has-error");
+        $(phone).next().removeClass("has-success");
+        $(phone).next().removeClass("has-error");
         $(phone).next().html('');
     }
 
@@ -225,18 +225,18 @@ function isEmail(email) {
 
     if(tam>0){
         if(regex.test(emailstr)){
-            $(email).parent(2).addClass("has-success");
-            $(email).parent(2).removeClass("has-error");
-            $(email).next().html('');
+            $(email).nextAll('.help-block').addClass("has-success");
+            $(email).nextAll('.help-block').removeClass("has-error");
+            $(email).nextAll('.help-block').html('');
         }else{
-            $(email).parent(2).addClass("has-error");
-            $(email).parent(2).removeClass("has-success");
-            $(email).next().html('Não utilize caracteres especiais na senha.');
+            $(email).nextAll('.help-block').addClass("has-error");
+            $(email).nextAll('.help-block').removeClass("has-success");
+            $(email).nextAll('.help-block').html('E-mail incorreto');
         }
     }else{
-        $(email).parent(2).removeClass("has-error");
-        $(email).parent(2).removeClass("has-success");
-        $(email).next().html('');
+        $(email).nextAll('.help-block').removeClass("has-error");
+        $(email).nextAll('.help-block').removeClass("has-success");
+        $(email).nextAll('.help-block').html('');
     }
   }
 function valSenha(val) {
@@ -246,17 +246,17 @@ function valSenha(val) {
 
     if(tam>0){
         if(regex.test(valstr)){
-            $(val).parent(2).addClass("has-success");
-            $(val).parent(2).removeClass("has-error");
+            $(val).next().addClass("has-success");
+            $(val).next().removeClass("has-error");
             $(val).next().html('');
         }else{
-            $(val).parent(2).addClass("has-error");
-            $(val).parent(2).removeClass("has-success");
+            $(val).next().addClass("has-error");
+            $(val).next().removeClass("has-success");
             $(val).next().html('Senha inválida');
         }
     }else{
-        $(val).parent(2).removeClass("has-error");
-        $(val).parent(2).removeClass("has-success");
+        $(val).next().removeClass("has-error");
+        $(val).next().removeClass("has-success");
         $(val).next().html('');
     }
   }
@@ -273,22 +273,22 @@ function valSenha(val) {
 
         var dataSplit = dataVal.split("/");
         if(dataSplit[0]>31 || dataSplit[1]>12 || dataSplit[2]>2100 || dataSplit[2]<2000){
-            $(data).parent(2).addClass("has-error");
-            $(data).parent(2).removeClass("has-success");
+            $(data).next().addClass("has-error");
+            $(data).next().removeClass("has-success");
             $(data).next().html('Verifique se o dia, mes ou ano estão corretos.');
         }else{
-            $(data).parent(2).addClass("has-success");
-            $(data).parent(2).removeClass("has-error");
+            $(data).next().addClass("has-success");
+            $(data).next().removeClass("has-error");
             $(data).next().html('');
         }
     } else if(tamanho==0){
-        $(data).parent(2).removeClass("has-success");
-        $(data).parent(2).removeClass("has-error");
+        $(data).next().removeClass("has-success");
+        $(data).next().removeClass("has-error");
         $(data).next().html('');
     
     }else{
-        $(data).parent(2).addClass("has-error");
-        $(data).parent(2).removeClass("has-success");
+        $(data).next().addClass("has-error");
+        $(data).next().removeClass("has-success");
         $(data).next().html('Digite a data no formato correto (dd/mm/aaaa)');
     }
 
@@ -304,51 +304,51 @@ function valSenha(val) {
 
         if(data1val<=datenow()){
             if(data2val>=data1val){
-                $(data1).parent(2).addClass("has-success");
-                $(data1).parent(2).removeClass("has-error");
+                $(data1).next().addClass("has-success");
+                $(data1).next().removeClass("has-error");
                 $(data1).next('#helpBlock2').html('');
-                $(data2).parent(2).addClass("has-success");
-                $(data2).parent(2).removeClass("has-error");
+                $(data2).next().addClass("has-success");
+                $(data2).next().removeClass("has-error");
                 $(data2).next('#helpBlock2').html('');
             }else{
-                $(data2).parent(2).addClass("has-error");
-                $(data2).parent(2).removeClass("has-success");
+                $(data2).next().addClass("has-error");
+                $(data2).next().removeClass("has-success");
                 $(data2).next('#helpBlock2').html('A data de vencimento não pode ser menor que a data de emissão.');
-                $(data1).parent(2).addClass("has-error");
-                $(data1).parent(2).removeClass("has-success");
+                $(data1).next().addClass("has-error");
+                $(data1).next().removeClass("has-success");
                 $(data1).next('#helpBlock2').html('A data de vencimento não pode ser menor que a data de emissão.');
             }
         }else{
-            $(data1).parent(2).addClass("has-error");
-            $(data1).parent(2).removeClass("has-success");
+            $(data1).next().addClass("has-error");
+            $(data1).next().removeClass("has-success");
             $(data1).next('#helpBlock2').html('Data de inicio não pode ser maior que a data atual');
         }
 
     }else{
         if(data1.val().length<10){
-            $(data1).parent(2).addClass("has-error");
-            $(data1).parent(2).removeClass("has-success");
+            $(data1).next().addClass("has-error");
+            $(data1).next().removeClass("has-success");
             $(data1).next('#helpBlock2').html('A data está incorreta!');
         }else{
             data1val = (converteDataBrToUs(data1.val()));
             if(data1val>datenow()){
-                $(data1).parent(2).addClass("has-error");
-                $(data1).parent(2).removeClass("has-success");
+                $(data1).next().addClass("has-error");
+                $(data1).next().removeClass("has-success");
                 $(data1).next('#helpBlock2').html('Data de inicio não pode ser maior que a data atual');
             }else{
-                $(data1).parent(2).addClass("has-success");
-                $(data1).parent(2).removeClass("has-error");
+                $(data1).next().addClass("has-success");
+                $(data1).next().removeClass("has-error");
                 $(data1).next('#helpBlock2').html('');
             }
             
         }
         if(data2.val().length<10){
-            $(data2).parent(2).addClass("has-error");
-            $(data2).parent(2).removeClass("has-success");
+            $(data2).next().addClass("has-error");
+            $(data2).next().removeClass("has-success");
             $(data2).next('#helpBlock2').html('A data está incorreta!');
         }else{
-            $(data2).parent(2).addClass("has-success");
-            $(data2).parent(2).removeClass("has-error");
+            $(data2).next().addClass("has-success");
+            $(data2).next().removeClass("has-error");
             $(data2).next('#helpBlock2').html('');
             
         }
@@ -358,22 +358,22 @@ function valSenha(val) {
 
         var dataSplit = dataVal.split("-");
         if(data1[2]>31 || data1[1]>12 || data1[0]>2100 || data1[0]<2000){
-            $(data1).parent(2).addClass("has-error");
-            $(data1).parent(2).removeClass("has-success");
+            $(data1).next().addClass("has-error");
+            $(data1).next().removeClass("has-success");
             $(data1).next().html('Verifique se o dia, mes ou ano estão corretos.');
         }else{
-            $(data1).parent(2).addClass("has-success");
-            $(data1).parent(2).removeClass("has-error");
+            $(data1).next().addClass("has-success");
+            $(data1).next().removeClass("has-error");
             $(data1).next().html('');
         }
     } else if(data1.length==0){
-        $(data1).parent(2).removeClass("has-success");
-        $(data1).parent(2).removeClass("has-error");
+        $(data1).next().removeClass("has-success");
+        $(data1).next().removeClass("has-error");
         $(data1).next().html('');
     
     }else{
-        $(data1).parent(2).addClass("has-error");
-        $(data1).parent(2).removeClass("has-success");
+        $(data1).next().addClass("has-error");
+        $(data1).next().removeClass("has-success");
         $(data1).next().html('Digite a data no formato correto (dd/mm/aaaa)');
     }*/
 
@@ -382,17 +382,17 @@ function valSenha(val) {
     var val = $(this).val();
 
     if(val.length > 0 && val.length < 4){
-        $(this).parent(2).addClass("has-error");
-        $(this).parent(2).removeClass("has-success");
+        $(this).next().addClass("has-error");
+        $(this).next().removeClass("has-success");
         $(this).next().html('O número do contrato está incorreto.');
     }else if(val.length == 0){
-        $(this).parent(2).removeClass("has-error");
-        $(this).parent(2).removeClass("has-success");
+        $(this).next().removeClass("has-error");
+        $(this).next().removeClass("has-success");
         $(this).next().html('');
         
     }else{
-        $(this).parent(2).removeClass("has-error");
-        $(this).parent(2).addClass("has-success");
+        $(this).next().removeClass("has-error");
+        $(this).next().addClass("has-success");
         $(this).next().html('');
     }
 
@@ -401,17 +401,17 @@ $(".dv").keyup(function(){
     var regex = /^[0-9]{1}$/;
 
     if(regex.test($(this).val())){
-        $(this).parent(2).removeClass("has-error");
-        $(this).parent(2).addClass("has-success");
+        $(this).next().removeClass("has-error");
+        $(this).next().addClass("has-success");
         $(this).next().html('');
     }else{
         if($(this).val().length==0){
-            $(this).parent(2).removeClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().removeClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('');
         }else{
-            $(this).parent(2).addClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().addClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('DV Incorreto');
 
         }
@@ -421,17 +421,17 @@ $(".banco").keyup(function(){
     var regex = /^[0-9]{3,4}$/;
 
     if(regex.test($(this).val())){
-        $(this).parent(2).removeClass("has-error");
-        $(this).parent(2).addClass("has-success");
+        $(this).next().removeClass("has-error");
+        $(this).next().addClass("has-success");
         $(this).next().html('');
     }else{
         if($(this).val().length==0){
-            $(this).parent(2).removeClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().removeClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('');
         }else{
-            $(this).parent(2).addClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().addClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('Banco Incorreto (Ex: 300)');
 
         }
@@ -441,17 +441,17 @@ $(".conta").keyup(function(){
     var regex = /^[0-9]{5,8}$/;
 
     if(regex.test($(this).val())){
-        $(this).parent(2).removeClass("has-error");
-        $(this).parent(2).addClass("has-success");
+        $(this).next().removeClass("has-error");
+        $(this).next().addClass("has-success");
         $(this).next().html('');
     }else{
         if($(this).val().length==0){
-            $(this).parent(2).removeClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().removeClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('');
         }else{
-            $(this).parent(2).addClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().addClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('Conta inválida');
 
         }
@@ -461,57 +461,59 @@ $(".agencia").keyup(function(){
     var regex = /^[0-9]{4}$/;
 
     if(regex.test($(this).val())){
-        $(this).parent(2).removeClass("has-error");
-        $(this).parent(2).addClass("has-success");
+        $(this).next().removeClass("has-error");
+        $(this).next().addClass("has-success");
         $(this).next().html('');
     }else{
         if($(this).val().length==0){
-            $(this).parent(2).removeClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().removeClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('');
         }else{
-            $(this).parent(2).addClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().addClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('Agência inválida');
 
         }
     }
 });
 $(".txtLivre").keyup(function(){
-    var regex = /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ/.(),*-+=$%&@!:; ]{0,100}$/;
+    var regex = /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ/.(),*-+=$%&@!:;?"' ]{0,100}$/;
 
-    if(regex.test($(this).val())){
-        $(this).parent(2).removeClass("has-error");
-        $(this).parent(2).addClass("has-success");
+    if($(this).val().length==0){
+        $(this).next().removeClass("has-error");
+        $(this).next().removeClass("has-success");
         $(this).next().html('');
     }else{
-        if($(this).val().length==0){
-            $(this).parent(2).removeClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+        if(regex.test($(this).val())){
+            $(this).next().removeClass("has-error");
+            $(this).next().addClass("has-success");
             $(this).next().html('');
         }else{
-            $(this).parent(2).addClass("has-error");
-            $(this).parent(2).removeClass("has-success");
-            $(this).next().html('Agência inválida');
-
+            $(this).next().addClass("has-error");
+             $(this).next().removeClass("has-success");
+             $(this).next().html('Verifique se digitou corretamente');
         }
+
+
     }
+
 });
 $(".nfe").keyup(function(){
     var regex = /^[0-9a-zA-Z]{3,16}$/;
 
     if(regex.test($(this).val())){
-        $(this).parent(2).removeClass("has-error");
-        $(this).parent(2).addClass("has-success");
+        $(this).next().removeClass("has-error");
+        $(this).next().addClass("has-success");
         $(this).next().html('');
     }else{
         if($(this).val().length==0){
-            $(this).parent(2).removeClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().removeClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('');
         }else{
-            $(this).parent(2).addClass("has-error");
-            $(this).parent(2).removeClass("has-success");
+            $(this).next().addClass("has-error");
+            $(this).next().removeClass("has-success");
             $(this).next().html('NF inválida');
 
         }
@@ -524,17 +526,17 @@ $(".nfe").keyup(function(){
             var regex=/^(R\$ )((([0-9]{1,3}\,[0-9]{2})|([0-9]{1,3}\.[0-9]{3}\,[0-9]{2})|([0-9]{1,3}\.[0-9]{3}\.[0-9]{3}\,[0-9]{2})))$/;
             if(regex.test(val)){
                 console.log('correto');
-                $(el).parent(2).removeClass("has-error");
-                $(el).parent(2).addClass("has-success");
+                $(el).next().removeClass("has-error");
+                $(el).next().addClass("has-success");
                 $(el).next().html('');
             }else{
-                $(el).parent(2).addClass("has-error");
-                $(el).parent(2).removeClass("has-success");
+                $(el).next().addClass("has-error");
+                $(el).next().removeClass("has-success");
                 $(el).next().html('O valor é inválido. Formato: R$ 0,00');
             }
         }else{
-            $(el).parent(2).addClass("has-error");
-            $(el).parent(2).removeClass("has-success");
+            $(el).next().addClass("has-error");
+            $(el).next().removeClass("has-success");
             $(el).next().html('O valor do contrato é inválido. Formato: R$ 0,00');
         }
 
