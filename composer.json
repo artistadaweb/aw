@@ -1,5 +1,14 @@
 {
     "name": "artistadaweb/aw",
     "description": "personal package",
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "require": {
+        "twbs/bootstrap": "dev-main",
+        "composer/installers": "1.x-dev",
+        "monolog/monolog": "2.x-dev",
+        "tinymce/tinymce": "dev-master",
+        "phpmailer/phpmailer": "dev-master",
+        "lcobucci/jwt": "^4.0@alpha",
+        "firebase/php-jwt": "dev-master"
+    }
 }
