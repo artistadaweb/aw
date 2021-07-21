@@ -30,6 +30,5 @@
         "psr-4": {
             "artistadaweb\\aw\\": "src"
         }
-    },
-	"minimum-stability": "dev"
+    }
 }
