@@ -2,7 +2,7 @@
     "name": "artistadaweb/aw",
     "description": "A biblioteca de inicialização de projetos",
 	 "license": "MIT",
-	 "version": "1.5.19",
+	 "version": "1.5.20",
     "authors": [
         {
             "name": "Marcus Oliveira",
@@ -25,6 +25,7 @@
         "lcobucci/jwt": "4.0.0-alpha1",
         "firebase/php-jwt": "5.4.0"
     },
+   "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "artistadaweb\\aw\\": "src"
