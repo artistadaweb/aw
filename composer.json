@@ -1,6 +1,8 @@
 {
     "name": "artistadaweb/aw",
     "description": "A biblioteca de inicialização de projetos",
+	 "license": "MIT",
+	 "version": "1.5.14",
     "authors": [
         {
             "name": "Marcus Oliveira",
