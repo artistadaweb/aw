@@ -2,7 +2,7 @@
     "name": "artistadaweb/aw",
     "description": "A biblioteca de inicialização de projetos",
 	 "license": "MIT",
-	 "version": "1.5.17",
+	 "version": "1.5.18",
     "authors": [
         {
             "name": "Marcus Oliveira",
@@ -19,11 +19,10 @@
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "twbs/bootstrap": "5.0.2",
-        "composer/installers": "1.x-dev",
         "monolog/monolog": "2.3.1",
         "tinymce/tinymce": "5.8.2",
         "phpmailer/phpmailer": "6.5.0",
-        "lcobucci/jwt": "^4.0@alpha",
+        "lcobucci/jwt": "4.1.4",
         "firebase/php-jwt": "5.4.0"
     },
     "autoload": {
