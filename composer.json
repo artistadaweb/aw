@@ -1,11 +1,10 @@
 {
     "name": "artistadaweb/aw",
     "description": "A biblioteca de inicialização de projetos",
-    "type": "library",
     "authors": [
         {
             "name": "Marcus Oliveira",
-            "email": "marcus@artistadaweb.com,
+            "email": "marcus@artistadaweb.com",
             "role": "Developer"
         }
     ],
