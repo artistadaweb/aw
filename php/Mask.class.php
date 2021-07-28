@@ -12,6 +12,25 @@ class Mask{
             return "null";
         }
     }
+    public static function dtTimeUstoBr($data){
+
+        if(strlen($data)>9){
+            return date("d/m/Y h:i", strtotime($data));
+        }else{
+            return "";
+        }
+    }
+
+    public static function maskPhone($data){
+        $pbr="";
+        if(strlen($data)==10){
+            $pbr="(".substr($data,0,2).") ".substr($data,2,4)."-".substr($data,6,4);
+        }else if(strlen($data)==11){
+            $pbr="(".substr($data,0,2).") ".substr($data,2,1)." ".substr($data,3,4)."-".substr($data,7,4);
+        }
+
+        return $pbr;
+    }
     public static function dataBrToUs($data){
         $dataBr="";
         if(strlen($data)==10){
@@ -20,7 +39,7 @@ class Mask{
 
             return $dataBr;
         }else{
-            return "null";
+            return null;
         }
     }
     public static function moneyUsToBr($money){

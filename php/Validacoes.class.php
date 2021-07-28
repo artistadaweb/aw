@@ -60,7 +60,7 @@ class Validacoes{
         }
     }
     public static function valNomes($val){
-        if(strlen($val)>4){
+        if(strlen($val)>4 && strlen($val)<255){
             if(preg_match("/^([a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ \-\.\,]+\s?)*\s*$/",$val)){
                 return array(true,"O valor do campo nome está inválido.");
             }else{
@@ -70,6 +70,161 @@ class Validacoes{
             return array(false,"O valor do campo nome está muito curto.");
         }
     }
+    public static function validaNomeCespecial($var,$f,$error){
+        
+        if($f){
+            if(preg_match("/^[\w\W]{1,255}$/",$var)){
+                return array(true,'ok');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[\w\W]{1,255}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+    public static function validaSenhaNovo($var,$f,$error){
+        
+        if($f){
+            if(preg_match("/^[\w\W]{6,255}$/",$var)){
+                return array(true,'ok');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[\w\W]{6,255}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+    public static function validaUsuario($var,$f,$error){
+        
+        if($f){
+            if(preg_match("/^[a-zA-Z0-9_.]{4,255}$/",$var)){
+                return array(true,'ok');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[a-zA-Z0-9_.]{4,255}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+    public static function validaTextoCespecial($var,$f,$error){
+        
+        if($f){
+            if(preg_match("/^[\w\W]{4,}$/",$var)){
+                return array(true,'ok');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[\w\W]{4,}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+    public static function validaArrayNums($var,$f,$error){
+        //exemplo [1,2,3,4,5,6,7]
+        if($f){
+            if(isset($var) && is_array($var) && count($var)>0){
+
+                foreach($var as $v){
+                    if(!(preg_match("/^[0-9]{1,10}$/",$v) && $v>0)){
+                        return array(false,$error);
+                   }
+                }
+                return array(true,'ok');
+
+            }else{
+                return array(false,$error);
+            }
+
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && is_array($var) && count($var)>0){
+
+                foreach($var as $v){
+                    if(!(preg_match("/^[0-9]{1,10}$/",$v) && $v>0)){
+                        return array(false,$error);
+                   }
+                }
+                
+                return array(true,'ok');
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+    public static function validaArrayNums2D($var,$f,$error){
+        //Exemplo [1,6],[3,3],[1,9]
+        if($f){
+            if(isset($var) && is_array($var) && count($var)>0){
+
+                foreach($var as $v){
+                    if(!(preg_match("/^[0-9]{1,10}$/",$v[0]) && $v[0]>0)){
+                        return array(false,$error);
+                   }
+                    if(!(preg_match("/^[0-9]{1,10}$/",$v[1]) && $v[1]>0)){
+                        return array(false,$error);
+                   }
+                }
+                return array(true,'ok');
+
+            }else{
+                return array(false,$error);
+            }
+
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && is_array($var) && count($var)>0){
+
+                foreach($var as $v){
+                    if(!(preg_match("/^[0-9]{1,10}$/",$v[0]) && $v[0]>0)){
+                        return array(false,$error);
+                   }
+                    if(!(preg_match("/^[0-9]{1,10}$/",$v[1]) && $v[1]>0)){
+                        return array(false,$error);
+                   }
+                }
+
+                return array(true,'ok');
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+   
     public static function validaTelParaNumero($var){
         
         if(isset($var) && is_array($var) && count($var)>0){
@@ -153,32 +308,25 @@ class Validacoes{
         }
     }
 
-    public static function validaEmail($var){
+    public static function validaEmail($var,$f,$error){
         
-        if(isset($var) && is_array($var) && count($var)>0){
-
-            foreach($var as $nomes => $val){
-                if(strlen($val[1])>5){
-                    if(preg_match("/^(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){255,})(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){65,}@)(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22))(?:\\.(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-+[a-z0-9]+)*\\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-+[a-z0-9]+)*)|(?:\\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\\]))$/iD",$val[1])){
-                        continue;
-                    }else{
-                        return array(false,"O valor do campo ".$nomes." está inválido.");
-                    }
-                }else if(strlen($val[1])==0){
-                    //SE ESTIVER VAZIO, RETORNA ERRO SE FOR CAMPO OBRIGATORIO
-                    if($val[0]==1){
-                        return array(false,"Preencha todos os campos obrigatórios: ".$nomes);
-                    }else{}
+            if($f){
+                if(preg_match('/^(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){255,})(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){65,}@)(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22))(?:\\.(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-+[a-z0-9]+)*\\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-+[a-z0-9]+)*)|(?:\\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\\]))$/iD',$var)){
+                    return array(true,'ok');
+               }else{
+                   return array(false,$error);
+               }
+            }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+                if(isset($var) && strlen($var)>0){
+                    if(preg_match('/^(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){255,})(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){65,}@)(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22))(?:\\.(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-+[a-z0-9]+)*\\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-+[a-z0-9]+)*)|(?:\\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\\]))$/iD',$var)){
+                        return array(true,'');
+                   }else{
+                       return array(false,$error);
+                   }
                 }else{
-                    return array(false,"O valor do campo ".$nomes." está muito curto.");
+                    return array(true,'');
                 }
             }
-
-            //SE NAO DER ERROS
-            return array(true,"");
-        }else{
-            return array(false,"Nenhum campo para validação");
-        }
     }
     public static function validaUf($var){
         
@@ -243,7 +391,7 @@ class Validacoes{
              
         
      }
-     private function validaCPF($cpf = null) {
+     private static function validaCPF($cpf = null) {
 
         // Verifica se um número foi informado
         if(empty($cpf)) {
@@ -289,7 +437,7 @@ class Validacoes{
             return true;
         }
     }
-    private function isValidCNPJ($cnpj = null) {
+    private static function isValidCNPJ($cnpj = null) {
 
         // Verifica se um número foi informado
         if(empty($cnpj)) {
@@ -351,21 +499,132 @@ class Validacoes{
          
         }
     }
-    public static function validaTipo($var){
+    
+    public static function validaFlag($var,$f,$error){
         
-       if(preg_match("/^[1-2]{1}$/",$var)){
-            return array(true,'');
-       }else{
-           return array(false,'Escolha um tipo de fornecedor');
-       }
+        if($f){
+            if(preg_match("/^[0-9]{1,4}$/",$var)){
+                return array(true,'');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[0-9]{1,4}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
     }
-    public static function validaFlag($var){
+    public static function validaTipo($var,$f,$error){
         
-       if(preg_match("/^[0-9]{1,4}$/",$var)){
-            return array(true,'');
-       }else{
-           return array(false,'Escolha um tipo');
-       }
+        if($f){
+            if(preg_match("/^[1-2]{1}$/",$var)){
+                return array(true,'');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[1-2]{1}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+    public static function validaNumeros($var,$f,$error){
+        
+        if($f){
+            if(preg_match("/^[0-9]{1,255}$/",$var)){
+                return array(true,'');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[0-9]{1,255}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+    public static function DAESPvalidaVolumes($var,$f,$error){
+        
+        if($f){
+            if(preg_match("/^[0-9]{1,2}$/",$var) && $var > 0 && $var <= 50){
+                return array(true,'ok');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[0-9]{1,2}$/",$var) && $var > 0 && $var <= 50){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+    public static function validaNumMaiorZero($var,$f,$error){
+        
+        if($f){
+            if(preg_match("/^[0-9]{1,10}$/",$var) && $var > 0){
+                return array(true,'ok');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[0-9]{1,10}$/",$var) && $var > 0){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
+    }
+    public static function validaNumComZero($var,$f,$error){
+        
+        if($f){
+            if(preg_match("/^[0-9]{1,14}$/",$var)){
+                return array(true,'ok');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[0-9]{1,14}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+
     }
     public static function validaArrayNum($var){
         
@@ -439,13 +698,62 @@ class Validacoes{
            return array(false,'O contrato é inválido');
        }
     }
-    public static function validaDataBr($var){
-        
-       if(preg_match("/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/",$var)){
-            return array(true,'');
-       }else{
-           return array(false,'A data está incorreta'.$var);
-       }
+    public static function validaDataBr($var,$f,$error){
+        if($f){
+            if(preg_match("/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/",$var)){
+                return array(true,'');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+    }
+    public static function validaDataUs($var,$f,$error){
+        if($f){
+            if(preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/",$var)){
+                return array(true,'');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
+    }
+    public static function validaHoraMinuto($var,$f,$error){
+        if($f){
+            if(preg_match("/^[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$/",$var)){
+                return array(true,'');
+           }else{
+               return array(false,$error);
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(isset($var) && strlen($var)>0){
+                if(preg_match("/^[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$/",$var)){
+                    return array(true,'');
+               }else{
+                   return array(false,$error);
+               }
+            }else{
+                return array(true,'');
+            }
+        }
     }
     public static function validaMoneyBr($var){
         

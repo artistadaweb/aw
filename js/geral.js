@@ -1,5 +1,37 @@
 function showLoadComponent(mod){
-    $(mod).append("<img src='images/geral/load_infinity.gif' class='load_infinity' alt='Loader' title='Loader' style='clear:both;display:block;width:50px;margin:auto;' />");
+    $(mod).append("<img src='images/icons/loader_infinity.gif' class='load_infinity' alt='Loader' title='Loader' style='clear:both;display:block;width:50px;margin:auto;' />");
+}
+function limpaForms(mod){
+    $(mod).find('input[type=text]').each(function(){
+        $(this).val('');
+    });
+    $(mod).find('input[type=password]').each(function(){
+        $(this).val('');
+    });
+    $(mod).find('input[type=hidden]').each(function(){
+        $(this).val('');
+    });
+    $(mod).find('input[type=number]').each(function(){
+        $(this).val('');
+    });
+    $(mod).find('textarea').each(function(){
+        $(this).val('');
+    });
+    $(mod).find('input[type=checkbox]').each(function(){
+        $(this).attr('checked',false);
+    });
+    $(mod).find('input[type=radio]').each(function(){
+        $(this).attr('checked',false);
+    });
+   /* $(mod).find('select:not([data-clean])').each(function(){
+        $(this).empty();
+    });*/
+    $(mod).find('select').find('option').each(function(){
+        $(this).attr('selected',false);
+    });
+    $(mod).find('input[type=radio],input[type=checkbox]').each(function(){
+        $(this).attr('checked',false);
+    });
 }
 function hideLoadComponent(mod){
     setTimeout(function(){
@@ -61,8 +93,39 @@ $(function(){
     function hideLoader(){
         $('#animload').fadeOut(200);
     }
+    
+function geraDocumento(params)
+{
+        var url="view/doc.php";
+        var name="NewFile";
+
+         var form = document.createElement("form");
+         form.setAttribute("method", "post");
+         form.setAttribute("action", url);
+         form.setAttribute("target", name);
+
+         for (var i in params) {
+             if (params.hasOwnProperty(i)) {
+                 var input = document.createElement('input');
+                 input.type = 'hidden';
+                 input.name = i;
+                 input.value = params[i];
+                 form.appendChild(input);
+             }
+         }
+         
+         document.body.appendChild(form);
+         
+         //note I am using a post.htm page since I did not want to make double request to the page 
+        //it might have some Page_Load call which might screw things up.
+         //window.open("doc.php", name, windowoption);
+         
+         form.submit();
+         
+         document.body.removeChild(form);
+ }
     function showAlert(title, body, type,btns){
-     
+        ((type==null || type<1)?type=0:'');
         $('#customModal').find(".modal-title").empty();
         $('#customModal').find(".modal-body").empty();
         $('#customModal').find(".modal-footer").empty();
@@ -70,21 +133,34 @@ $(function(){
          * 1-Success;
          * 2-Error;
          * 3-Warns
-         *
+         */
         var src='';
         switch(type){
-            case 1:src='images/icons/success.png';break;
-            case 2:src='images/icons/error.png';break;
-            case 3:src='images/icons/warning.png';break;
-            default:src='images/icons/error.png';break;
-        }*/
+            case 1:src='images/icons/icon_success.png';break;
+            case 2:src='images/icons/icon_error.png';break;
+            case 3:src='images/icons/icon_warning.png';break;
+            default:src='images/icons/icon_error.png';break;
+        }
+        $('#customModal').find(".iconModalCustom").css("background-image","url("+src+")");
+        
         $('#customModal').find(".modal-title").append(title);
         $('#customModal').find(".modal-body").append(body);
 
 
-        $('#customModal').modal({backdrop: 'static', keyboard: false}); 
         $('#customModal').find('.modal-footer').append(btns); 
+        $('#customModal').modal({backdrop: 'static', keyboard: false}); 
     }
+function canUseWebP() {
+    var elem = document.createElement('canvas');
+
+    if (!!(elem.getContext && elem.getContext('2d'))) {
+        // was able or not to get WebP representation
+        return elem.toDataURL('image/webp').indexOf('data:image/webp') == 0;
+    }
+
+    // very old browser like IE 8, canvas not supported
+    return false;
+}
     function showAlertContact(){
      
         $('#customModal').find(".modal-title").empty();
@@ -141,7 +217,47 @@ $(function(){
         var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]+'/'+loc;
         window.location=baseUrl;
     }
-
+    function converteDataBrToUs(data){
+        data = data.split('/');
+    
+        return (data[2]+'-'+data[1]+'-'+data[0]);
+    }
+    function converteDataTimeUsToBr(data){
+    
+        ret='';
+        var data0 ='';
+        //alert(typeof data);
+        if(typeof data == 'string'){
+            if(data.length > 7){
+                data0=data.split(' ');
+                data = data0[0].split('-');
+                ret = (data[2]+'/'+data[1]+'/'+data[0]);
+            }
+        }
+        
+        
+    
+        return ret;
+    }
+    function converteDataTimeUsToBrTime(data){
+    
+        ret='';
+        var hora='';
+        var data0 ='';
+        //alert(typeof data);
+        if(typeof data == 'string'){
+            if(data.length > 15){
+                data0=data.split(' ');
+                data = data0[0].split('-');
+                hora = data0[1].split(':');
+                ret = (data[2]+'/'+data[1]+'/'+data[0]+' '+hora[0]+':'+hora[1]);
+            }
+        }
+        
+        
+    
+        return ret;
+    }
 function datenow(){
     var today = new Date();
 var dd = today.getDate();
@@ -170,7 +286,7 @@ function getDaysAgo(datetime){
 
 function tituloUrl(title){
 
-    return title.replace(" ","-").toLowerCase();
+    return title.replace(/\s+/g,' ').replace(/[_\s]/g, '-').normalize('NFKD').replace(/[^\w-]/g, '').replace(/[^a-z0-9\s-]/gi, '').toLowerCase();
 
 }
 function RemoveAccents(strAccents) {
@@ -188,3 +304,18 @@ function RemoveAccents(strAccents) {
     strAccentsOut = strAccentsOut.join('');
     return strAccentsOut;
 }
+function detectar_mobile() { 
+    if( navigator.userAgent.match(/Android/i)
+    || navigator.userAgent.match(/webOS/i)
+    || navigator.userAgent.match(/iPhone/i)
+    || navigator.userAgent.match(/iPad/i)
+    || navigator.userAgent.match(/iPod/i)
+    || navigator.userAgent.match(/BlackBerry/i)
+    || navigator.userAgent.match(/Windows Phone/i)
+    ){
+       return true;
+     }
+    else {
+       return false;
+     }
+   }

@@ -1,35 +1,43 @@
-//MASCARA P/ CPF CNPJ
-/*
-$(".cpfcnpj").keydown(function(){
-    maskCnpj($(this));
-});
-$(".cpfcnpj").ready(function(){
-    maskCnpj($(this));
-});
+function loadMask(){
 
+    newMaskCnpj();
+    //MASCARA CEP
+    maskCep();
+
+    //DATA PICKER
+    datePick();
+
+    maskTime();
+
+    //MASCARA TEL
+    telefonesMask();
+
+}
+
+/*****************MASCARA CNPJ FUNCOES************** */
 function maskCnpj(el){
     try {
-    	$(el).unmask();
+        $(el).unmask();
     } catch (e) {}
-
+    
     var tamanho = $(el).val().length;
-
-        $(el).val(maskCnpjStr($(el).val().replace(/[^\w\s]/gi, '')));
-
+    
+    $(el).val(maskCnpjStr($(el).val().replace(/[^\w\s]/gi, '')));
+    
     
     // ajustando foco
     var elem = el;
     setTimeout(function(){
-    	// mudo a posição do seletor
+        // mudo a posição do seletor
     	elem.selectionStart = elem.selectionEnd = 10000;
     }, 0);
     // reaplico o valor para mudar o foco
     var currentValue = $(el).val();
     $(el).val('');
     $(el).val(currentValue);
-}/*
+}
 function maskCnpjStr(el){
-
+    
     var $in = $("<input>", {id: "foo", "name": "inptest","type":"hidden","value":el});
     
     try {
@@ -47,55 +55,104 @@ function maskCnpjStr(el){
     // ajustando foco
     var elem = $in;
     setTimeout(function(){
-    	// mudo a posição do seletor
+        // mudo a posição do seletor
     	elem.selectionStart = elem.selectionEnd = 10000;
     }, 0);
     // reaplico o valor para mudar o foco
     var currentValue = $($in).val();
     $($in).val('');
     $($in).val(currentValue);
-
+    
     return $($in).val();
-}*/
-//MASCARA P/ CPF CNPJ
-//MASCARA P/ CEP
-$("#cep").keyup(function(){
+}
+function newMaskCnpj(){
+    
+    var el = $('input[name=cpfcnpj]');
+    
+    try {
+        $(el).unmask();
+    } catch (e) {}
 
-    maskCep();
+   
+        var SPMaskBehavior1 = function (val) { 
+            return val.replace(/\D/g, '').length <= 11 ? '000.000.000-00999' : '00.000.000/0000-00';;
+          },
+          spOptions1 = {
+            onKeyPress: function(val, e, field, options) {
+             
+                    field.mask(SPMaskBehavior1.apply({}, arguments), options);
+                
+              }
+          };
+        
+          $(el).mask(SPMaskBehavior1, spOptions1);  
+    
+ 
+      
+}
+/*****************MASCARA CNPJ FUNCOES************** */
 
-});
-/*
-$("#cep").ready(function(){
+/*****************MASCARA DATA************** */
+function datePick(){
+    $('.dataPick').mask('99/99/9999')
+    $('.dataPick').datepicker({
+        dateFormat: 'dd/mm/yy',
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
+    });
 
-    maskCep();
+}
 
-});*/
 
+
+/*****************MASCARA CEP FUNCOES************** */
 function maskCep(){
-    var cep = $("#cep").val();
-    if(cep.length > 0){
-    $("#cep").mask("99999-999");
+    var el = $('input[name=cep]');
 
-        $("#cep").next().addClass("has-error");
-        $("#cep").next().removeClass("has-success");
-        $("#cep").next().html('O formato do CEP é inválido (ex: 00000-000)');
+    try {
+        $(el).unmask();
+    } catch (e) {}
 
-        var tamanho = $("#cep").val().length;
-        
+    var SPMaskBehavior = function (val) {
+        return val.replace(/\D/g, '').length === 8 ? '00000-000' : '00000-000';
+      },
+      spOptions = {
+        onKeyPress: function(val, e, field, options) {
+            field.mask(SPMaskBehavior.apply({}, arguments), options);
+          }
+      };
+    
+      $(el).mask(SPMaskBehavior, spOptions);      
+    
+}
+function maskTime(){
+    //mask code
+    $(".timepicker").mask("99:99");  
+    
+}
+/*****************MASCARA CEP FUNCOES************** */
 
-            
-            if(tamanho == 9){
-                $("#cep").next().addClass("has-success");
-                $("#cep").next().removeClass("has-error");
-                $("#cep").next().html('');
-            }
-        
+function telefonesMask(){
+    var el = $('.tel');
 
-    }else{
-        $("#cep").next().removeClass("has-success");
-        $("#cep").next().removeClass("has-error");
-        $("#cep").next().html('');
-    }
+    try {
+        $(el).unmask();
+    } catch (e) {}
+
+    var SPMaskBehavior = function (val) {
+        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+      },
+      spOptions = {
+        onKeyPress: function(val, e, field, options) {
+            field.mask(SPMaskBehavior.apply({}, arguments), options);
+          }
+      };
+    
+      $(el).mask(SPMaskBehavior, spOptions);
+    
 }
 
 
@@ -119,18 +176,11 @@ function mtel(v){
 function id( el ){
 	return document.getElementById( el );
 }
-function converteDataBrToUs(data){
-    data = data.split('/');
 
-    return (data[2]+'-'+data[1]+'-'+data[0]);
+function RemoveAccents2(s) 
+{
+    return s.normalize('NFKD').replace(/[^\w-]/g, '');
 }
-function converteDataTimeUsToBr(data){
-    data0 = data.split(' ');
-    data = data0[0].split('-');
-
-    return (data[2]+'/'+data[1]+'/'+data[0]);
-}
-
 $('#data').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
 $('#data2').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
 $('.data2').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
