@@ -67,7 +67,7 @@ function maskCnpjStr(el){
 }
 function newMaskCnpj(){
     
-    var el = $('input[name=cpfcnpj]');
+    var el = $('.cpfcnpj');
     
     try {
         $(el).unmask();
