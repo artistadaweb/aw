@@ -9,7 +9,7 @@ class Mask{
 
             return $dataBr;
         }else{
-            return "null";
+            return "";
         }
     }
     public static function dtTimeUstoBr($data){
@@ -39,14 +39,29 @@ class Mask{
 
             return $dataBr;
         }else{
-            return null;
+            return "";
         }
     }
-    public static function moneyUsToBr($money){
+    public static function dtTimeBrToUs($data){
+        $dataBr="";
+        if(strlen($data)>9){
+            $data=explode("/",$data);
+            $dataBr = $data[2]."-".$data[1]."-".$data[0];
+
+            return date("Y-m-d h:i", strtotime($dataBr));
+        }else{
+            return "";
+        }
+    }
+    public static function numForm($n){
+        
+        return number_format($n,0,"",".");
+    }
+    public static function moneyForm($money){
         
         return number_format($money,2,",",".");
     }
-    public static function moneyUsToBr2($money){
+    public static function moneyForm_rs($money){
         
         return "R$ ".number_format($money,2,",",".");
     }

@@ -30,7 +30,7 @@ class Validacoes{
     public static function vencParcela($periodo,$data){
         return date("Y-m-d", strtotime($periodo.$data));
     }
-    public static function validaNomes($var){
+    public static function validaNomes_old($var){
 
         if(isset($var) && is_array($var) && count($var)>0){
                 

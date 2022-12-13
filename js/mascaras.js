@@ -1,14 +1,14 @@
 function loadMask(){
 
+    //FUNCAO QUE CARREGA TODAS AS MASCARAS
+
+
     newMaskCnpj();
     //MASCARA CEP
     maskCep();
-
     //DATA PICKER
     datePick();
-
     maskTime();
-
     //MASCARA TEL
     telefonesMask();
 
