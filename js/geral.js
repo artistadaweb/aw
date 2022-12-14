@@ -14,6 +14,9 @@ function limpaForms(mod){
     $(mod).find('input[type=number]').each(function(){
         $(this).val('');
     });
+    $(mod).find('input[type=file]').each(function(){
+        $(this).val('');
+    });
     $(mod).find('textarea').each(function(){
         $(this).val('');
     });
@@ -83,9 +86,6 @@ $(function(){
             init();
         }
 
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
 
     function showLoader(){
         $('#animload').fadeIn(200);
@@ -221,6 +221,11 @@ function canUseWebP() {
         data = data.split('/');
     
         return (data[2]+'-'+data[1]+'-'+data[0]);
+    }
+    function converteDataUsToBr(data){
+        data = data.split('-');
+    
+        return (data[2]+'/'+data[1]+'/'+data[0]);
     }
     function converteDataTimeUsToBr(data){
     

@@ -499,6 +499,22 @@ $(".txtLivre").keyup(function(){
     }
 
 });
+
+function validateForms(el,msg,valid){
+
+    $(el).parent().find('.validationsForms').remove();
+    $(el).removeClass('is-invalid');
+    $(el).removeClass('is-valid');
+
+    if(valid){
+        $(el).addClass('is-valid');
+    }else{
+        $(el).addClass('is-invalid');
+        $(el).after('<div class="validationsForms invalid-feedback">'+msg+'</div>');
+    }
+
+}
+
 $(".nfe").keyup(function(){
     var regex = /^[0-9a-zA-Z]{3,16}$/;
 

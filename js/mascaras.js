@@ -94,7 +94,7 @@ function newMaskCnpj(){
 
 /*****************MASCARA DATA************** */
 function datePick(){
-    $('.dataPick').mask('99/99/9999')
+    $('.dataPick').mask('99/99/9999');
     $('.dataPick').datepicker({
         dateFormat: 'dd/mm/yy',
         dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
@@ -181,8 +181,8 @@ function RemoveAccents2(s)
 {
     return s.normalize('NFKD').replace(/[^\w-]/g, '');
 }
-$('#data').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
-$('#data2').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
-$('.data2').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
-$('.data').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
+// $('#data').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
+// $('#data2').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
+// $('.data2').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
+// $('.data').mask("99/99/9999", {placeholder: 'DD/MM/YYYY' });
 //$('.data2').keydown(function(){alert('teste');});
