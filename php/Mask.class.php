@@ -57,6 +57,10 @@ class Mask{
         
         return number_format($n,0,"",".");
     }
+    public static function moneyBrToUs($money){
+        $retMoney=trim(str_replace('R$','',str_replace(',','.',str_replace('.','',$money))));
+        return $retMoney;
+    }
     public static function moneyForm($money){
         
         return number_format($money,2,",",".");
@@ -64,6 +68,9 @@ class Mask{
     public static function moneyForm_rs($money){
         
         return "R$ ".number_format($money,2,",",".");
+    }
+    public static function limpaDadosApenasNumeros($d){
+        return preg_replace('/[^0-9]/', '', $d);
     }
     public static function cnpjFormatted($val){
         if(strlen($val)==14){

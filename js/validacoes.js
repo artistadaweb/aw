@@ -565,7 +565,7 @@ $(".nfe").keyup(function(){
     $('#modalType[data-name=alsl]').children('img').attr('src','');
 });
 $(document).ready(function(){
-    showLoader();
+    // showLoader("ddddd");
     setTimeout(hideLoader, 500);
 
 });

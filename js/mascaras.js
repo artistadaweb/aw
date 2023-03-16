@@ -110,7 +110,7 @@ function datePick(){
 
 /*****************MASCARA CEP FUNCOES************** */
 function maskCep(){
-    var el = $('input[name=cep]');
+    var el = $('.cep');
 
     try {
         $(el).unmask();

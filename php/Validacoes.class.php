@@ -59,6 +59,23 @@ class Validacoes{
             return array(false,"Nenhum campo para validação");
         }
     }
+    public static function valTel($var,$f,$e){
+        if($f){
+            if(strlen($var)==10 || strlen($var)==11){
+                return [true,''];
+            }else{
+                return [false,$e];
+            }
+        }else{
+            if(strlen($var)==10 || strlen($var)==11){
+                return [true,''];
+            }else if(!isset($var) || strlen($var)==0){
+                return [true,''];
+            }else{
+                return [false,$e];
+            }
+        }
+    }
     public static function valNomes($val){
         if(strlen($val)>4 && strlen($val)<255){
             if(preg_match("/^([a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ \-\.\,]+\s?)*\s*$/",$val)){
@@ -68,6 +85,35 @@ class Validacoes{
             }
         }else{
             return array(false,"O valor do campo nome está muito curto.");
+        }
+    }
+    public static function valNomeNovo($n,$f,$e){
+        try {
+            if($f){
+                if(strlen($n)>4 && strlen($n)<255){
+                    if(preg_match("/^([a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]+\s?)*\s*$/",$n)){
+                        return [true,''];
+                    }else{
+                        throw new Exception($e);
+                    }
+                }else{
+                    throw new Exception($e);
+                }
+            }else{
+                if(strlen($n)>4 && strlen($n)<255){
+                    if(preg_match("/^([a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]+\s?)*\s*$/",$n)){
+                        return [true,''];
+                    }else{
+                        throw new Exception($e);
+                    }
+                }else if(!isset($n) || strlen($n)==0){
+                    return [true,''];
+                }else{
+                    throw new Exception($e);
+                }
+            }
+        } catch (Exception $e) {
+            return [false,$e->getMessage()];
         }
     }
     public static function validaNomeCespecial($var,$f,$error){
@@ -90,6 +136,18 @@ class Validacoes{
             }
         }
 
+    }
+    public static function validaSenhasIguais($s1,$s2,$e){
+        if(strlen($s1)>3 && strlen($s2)>3){
+
+            if($s1==$s2){
+                return [true,''];
+            }else{
+                return [false,$e];
+            }
+        }else{
+            return [false,$e];
+        }
     }
     public static function validaSenhaNovo($var,$f,$error){
         
@@ -352,13 +410,28 @@ class Validacoes{
             return array(true,'');
        }
     }
-    public static function validaCep($var){
-        
-       if(preg_match("/^[0-9]{8}$/",$var)){
-            return array(true,'');
-       }else{
-           return array(false,'o campo CEP está no formato incorreto (ex: 00000-000).');
-       }
+    public static function validaCep($var,$f,$e){
+        try {
+            if($f){
+                if(preg_match("/^[0-9\-]{9}$/",$var)){
+                    return array(true,'');
+               }else{
+                   throw new Exception($e);
+               }
+            }else{
+                if(!isset($var) || strlen($var)==0){
+                    return array(true,'');
+                }else{
+                    if(preg_match("/^[0-9\-]{9}$/",$var)){
+                        return array(true,'');
+                    }else{
+                        throw new Exception($e);
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            return [false,$e->getMessage()];
+        }
     }
     public static function validaCnpj($var){
         
@@ -436,6 +509,59 @@ class Validacoes{
     
             return true;
         }
+    }
+     public static function validaCPFNovo($cpf,$f,$e) {
+
+        try {
+            // Verifica se um número foi informado
+            if((!isset($cpf) || empty($cpf) || strlen($cpf)==0) && $f) {
+                throw new Exception($e);
+            }else if((!isset($cpf) || empty($cpf) || strlen($cpf)==0) && !$f){
+                return [true,''];
+            }
+        
+            // Elimina possivel mascara
+            $cpf = preg_replace("/[^0-9]/", "", $cpf);
+            $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
+            
+            // Verifica se o numero de digitos informados é igual a 11 
+            if (strlen($cpf) != 11) {
+                throw new Exception($e);
+            }
+            // Verifica se nenhuma das sequências invalidas abaixo 
+            // foi digitada. Caso afirmativo, retorna falso
+            else if ($cpf == '00000000000' || 
+                $cpf == '11111111111' || 
+                $cpf == '22222222222' || 
+                $cpf == '33333333333' || 
+                $cpf == '44444444444' || 
+                $cpf == '55555555555' || 
+                $cpf == '66666666666' || 
+                $cpf == '77777777777' || 
+                $cpf == '88888888888' || 
+                $cpf == '99999999999') {
+                    throw new Exception($e);
+            // Calcula os digitos verificadores para verificar se o
+            // CPF é válido
+            } else {   
+                
+                for ($t = 9; $t < 11; $t++) {
+                    
+                    for ($d = 0, $c = 0; $c < $t; $c++) {
+                        $d += $cpf{$c} * (($t + 1) - $c);
+                    }
+                    $d = ((10 * $d) % 11) % 10;
+                    if ($cpf{$c} != $d) {
+                        throw new Exception($e);
+                    }
+                }
+        
+                return [true,''];
+            }
+        } catch (Exception $e) {
+            return [false,$e->getMessage()];
+        }
+
     }
     private static function isValidCNPJ($cnpj = null) {
             // Verificar se foi informado
@@ -668,6 +794,66 @@ class Validacoes{
            return array(false,'O contrato é inválido');
        }
     }
+    public static function validateDate($date, $format = 'd/m/Y',$f,$e){
+        try {
+            if($f){
+                $d = DateTime::createFromFormat($format, $date);
+                $r=$d && $d->format($format) === $date;
+                if(!$r){
+                    throw new Exception($e);
+                }
+                return [true,''];
+            }else{
+                if(!isset($date) || strlen($date)==0){
+                    return [true,''];
+                }else{
+                    $d = DateTime::createFromFormat($format, $date);
+                    $r=$d && $d->format($format) === $date;
+                    if(!$r){
+                        throw new Exception($e);
+                    }
+                    return [true,''];
+                }
+            }
+        } catch (Exception $er) {
+            return [false,$er->getMessage()];
+            //throw $th;
+        }
+
+    }
+    public static function validaSelect($var,$f,$e){
+        if($f){
+            if(!isset($var) || !is_numeric($var) || $var==0){
+                return [false,$e];
+           }else{
+               return [true,''];
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(!isset($var) || $var==0){
+                return [true,$e];
+            }else if((int) $var>0){
+                return [true,''];
+            }else{
+                return [false,''];
+
+            }
+        }
+    }
+    public static function validaSelect2($var,$f,$e){
+        if($f){
+            if(!isset($var) || !is_array($var) || count($var)<1){
+                return [false,$e];
+           }else{
+               return [true,''];
+           }
+        }else{//SE NAO FOR OBRIGATORIO MAS ESTIVER PREENCHIDO TAMBEM VALIDA
+            if(!isset($var) || !is_array($var) || count($var)<1){
+                return [true,$e];
+            }else{
+                return [true,''];
+            }     
+        }
+    }
     public static function validaDataBr($var,$f,$error){
         if($f){
             if(preg_match("/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/",$var)){
@@ -743,6 +929,24 @@ class Validacoes{
        }else{
            return array(false,'O valor está incorreto');
        }
+    }
+    public static function valMoneyUs($var,$f,$e){
+        
+        if($f){
+            if(isset($var) && is_float($var)){
+                return [true,''];
+            }else{
+                return [false,$e];
+            }
+        }else{
+            if(!isset($var) || strlen($var)==0){
+                return [true,''];
+            }else if(is_float($var)){
+                return [true,''];
+            }else{
+                return [false,$e];
+            }
+        }
     }
 
 }

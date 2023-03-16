@@ -1,3 +1,4 @@
+var loaderTask=[];
 function showLoadComponent(mod){
     $(mod).append("<img src='images/icons/loader_infinity.gif' class='load_infinity' alt='Loader' title='Loader' style='clear:both;display:block;width:50px;margin:auto;' />");
 }
@@ -87,12 +88,69 @@ $(function(){
         }
 
 
-    function showLoader(){
-        $('#animload').fadeIn(200);
-    }
-    function hideLoader(){
-        $('#animload').fadeOut(200);
-    }
+
+        function showLoader(nome){
+            //$('#animload').fadeIn(200);
+            var index;
+            loaderTask.some(function (entry, i) {
+                if (entry.ntask == nome) {
+                    index = i;
+                    return true;
+                }
+            });
+      
+            if(typeof index === 'undefined'){
+                loaderTask.push({ntask:nome,finalizado:false});
+            }else{
+                loaderTask[index].finalizado = false;
+            }
+            
+            checkTasks();
+        }
+        function checkTasks(){
+            var showSpinner = true;
+            jQuery.each(loaderTask,function(i,e){
+                if(!e.finalizado){
+                    showSpinner = true;
+                    return false;
+                }else{
+                    showSpinner = false;
+                }
+            });
+        
+            if(showSpinner){
+                showLoaderEl();
+            }else{
+                hideLoaderEl();
+            }
+        
+        }
+        function hideLoader(nome){
+            //loaderTask.push({ntask:nome,finalizado:true});
+            //checkTasks();
+            //$('#animload').fadeOut(200);
+            var index;
+            loaderTask.some(function (entry, i) {
+                if (entry.ntask == nome) {
+                    index = i;
+                    return true;
+                }
+            });
+      
+            if(typeof index === 'undefined'){
+                loaderTask.push({ntask:nome,finalizado:true});
+            }else{
+                loaderTask[index].finalizado = true;
+            }
+            
+            checkTasks();
+        }
+        function showLoaderEl(){
+            $('#animload').fadeIn(200);
+        }
+        function hideLoaderEl(){
+            $('#animload').fadeOut(200);
+        }
     
 function geraDocumento(params)
 {
